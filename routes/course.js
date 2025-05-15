@@ -1,18 +1,19 @@
 const { Router } = require('express');
+const { courseModel } = require('../models/courseData');
+const { userAuth } = require('../auth/userAuth');
+const { purchaseModel }  = require('../models/purchaseData');
 const courseRoutes = Router();
 
 
-
-//Course Purchase 
-courseRoutes.post('/course/purchase',(req,res)=>{
-    res.json({
-        "msg" : "This is the purchase route of course page",
-    })
-})
-
 //Course Preview
-courseRoutes.get('/course/preview',(req,res)=>{
-
+courseRoutes.get('/',async(req,res)=>{
+    try{
+        const courses = await courseModel.find({});
+        res.send(courses);
+    }catch{
+        res.send("something went wrong");
+    }
+   
 })
 
 module.exports = {

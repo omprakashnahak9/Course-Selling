@@ -1,5 +1,5 @@
 const { mongoose } = require('../config/mongoose');
-const { adminModel } = require('./adminData');
+
 
 
 const Schema = mongoose.Schema;

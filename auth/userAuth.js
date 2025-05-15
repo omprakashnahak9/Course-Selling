@@ -10,7 +10,7 @@ const userAuth = (req,res,next)=>{
     }
 
     try{
-        const decoding = jwt.decode(token,JWT_USER_SECRET);
+        const decoding = jwt.verify(token,JWT_USER_SECRET);
         req.userId = decoding.id;
         next();
     }catch(err){

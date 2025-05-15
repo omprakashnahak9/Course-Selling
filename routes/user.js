@@ -6,6 +6,8 @@ const { userModel } = require('../models/userData');
 
 const jwt = require('jsonwebtoken');
 const { JWT_USER_SECRET , userAuth } = require('../auth/userAuth');
+const { purchaseModel } = require('../models/purchaseData');
+const { courseModel } = require('../models/courseData');
 
 userRoutes.get('/signup',(req,res)=>{
     res.render('userSignup.ejs');
@@ -50,7 +52,7 @@ userRoutes.post('/signin',async (req,res)=>{
         const passChecking = await bcrypt.compare(password,accCheck.password);
         if(passChecking){
             const token = await jwt.sign({id: accCheck._id.toString()},JWT_USER_SECRET);
-
+            res.cookie('token',token);
             res.send("Signin sucessfully");
             
         }else{
@@ -63,8 +65,39 @@ userRoutes.post('/signin',async (req,res)=>{
 })
 
 //User Purchase
-userRoutes.get('/purchase',userAuth,(req,res)=>{
-    res.send("huu");
+userRoutes.get('/purchases',userAuth,async(req,res)=>{
+    const userId = req.userId;
+   try{
+    const purch = await purchaseModel.find({userId});
+    const courses = await courseModel.find({
+        _id:{$in: purch.map(x=>x.courseId)}
+    })
+    res.send(courses);
+   }catch(err){
+    res.send("no courses purchased");
+   }
+})
+
+//Purchasing the course
+userRoutes.get('/purchase',(req,res)=>{
+    res.render('purchase.ejs')
+})
+
+
+userRoutes.post('/purchase',userAuth,async(req,res)=>{
+    const userId = req.userId;
+    const courseId = req.body.courseId;
+
+    try{
+        const coursePur = await purchaseModel.create({
+            userId : userId,
+            courseId : courseId
+        })
+        res.send("Done");
+    }catch(err){
+        res.send("Something wrong");
+    }
+    
 })
 
 //Exporting the User Routes
