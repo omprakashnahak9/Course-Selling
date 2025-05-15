@@ -1,13 +1,141 @@
-## Create a course selling app
-- Initialize a new Node.js project
-- Add Express, jsonwebtoken to it as a dependency
-- Create index.js
-- Add route skeleton for user login, signup, purchase a course, see course
-- Add routes for admin login, admin signup, create a course, delete a course, add course content.
-- Add middlewares for user and admin auth
-- Add a database (mongodb), use dotenv to store the database connection string
-- Define the schema for User, Admin, Course, Purchase
-- Complete the routes for user login, signup, purchase a course, see course (Extra points - Use express routing to  better structure your routes)
-- Create the frontend
+# 🎓 Course Selling Web App
 
+This is a simple Course Selling Platform built using Node.js, Express.js, MongoDB, EJS, and JWT-based authentication. It supports two user roles:
 
+- **Admin**: Can create and update courses.
+- **User**: Can sign up, view courses, and purchase them.
+
+---
+
+## 🔧 Features
+
+### Admin
+- Admin signup and login
+- Create new courses
+- Update existing courses
+- View created courses
+
+### User
+- User signup and login
+- View all available courses
+- Purchase courses
+- View purchased courses
+
+---
+
+## 📁 Folder Structure
+
+```
+
+CourseSelling/
+│
+├── models/            # Mongoose models (Admin, User, Course, Purchase)
+├── routes/            # Express routers for admin, user, and course
+├── auth/              # Authentication middleware (adminAuth, userAuth)
+├── views/             # EJS template files (signup, signin, course creation, etc.)
+├── .env               # Environment variables
+├── app.js             # Main server file
+├── package.json
+└── README.md
+
+````
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/course-selling.git
+cd course-selling
+````
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Create `.env` File
+
+In the root directory, create a `.env` file and add the following:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/course-selling
+JWT_ADMIN_SECRET=your_admin_jwt_secret
+JWT_USER_SECRET=your_user_jwt_secret
+PORT=5000
+```
+
+### 4. Start MongoDB
+
+Make sure MongoDB is running on your system:
+
+```bash
+mongod
+```
+
+### 5. Start the Server
+
+```bash
+npm start
+```
+
+Now go to `http://localhost:5000` in your browser.
+
+---
+
+## 📌 Important Routes
+
+### Admin Routes
+
+* `GET /admin/signup` → Admin signup form
+* `POST /admin/signup` → Create admin
+* `GET /admin/signin` → Admin login form
+* `POST /admin/signin` → Login admin
+* `GET /create/courses` → Render course creation form
+* `POST /create/courses` → Create new course
+* `GET /update/course` → Render update form
+* `POST /update/course` → Update course
+* `GET /courses` → List admin's courses
+
+### User Routes
+
+* `GET /signup` → User signup form
+* `POST /signup` → Create user
+* `GET /signin` → User login form
+* `POST /signin` → Login user
+* `GET /purchase` → Render purchase form
+* `POST /purchase` → Purchase a course
+* `GET /purchases` → List purchased courses
+
+---
+
+## 🧠 Tech Stack
+
+* **Backend**: Node.js, Express.js
+* **Database**: MongoDB (via Mongoose)
+* **Frontend**: EJS templating
+* **Authentication**: JWT & Cookies
+* **Tools**: bcrypt, cookie-parser, dotenv, nodemon
+
+---
+
+## 🛠️ Known Issues
+
+* If you face errors related to cookies: make sure `cookie-parser` is set up correctly.
+* Always use `.env` secrets when signing JWT tokens.
+* Confirm that middleware like `userAuth` and `adminAuth` correctly reads cookies.
+
+---
+
+## ✍️ Author
+
+Made with ❤️ by **\omprakashnahak9**
+
+---
+
+## 📜 License
+
+This project is open source and available under the [MIT License](LICENSE).
